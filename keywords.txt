@@ -1,0 +1,12 @@
+# Syntax highlighting for plc_standardlib
+
+# Library name - KEYWORD1
+plc_standardlib	KEYWORD1
+
+# TYPE names - KEYWORD1
+TON KEYWORD1
+TOF KEYWORD1
+R_TRIG KEYWORD1
+F_TRIG KEYWORD1
+SR KEYWORD1
+RS KEYWORD1

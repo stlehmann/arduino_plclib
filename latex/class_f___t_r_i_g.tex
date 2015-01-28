@@ -1,0 +1,82 @@
+\hypertarget{class_f___t_r_i_g}{\section{F\+\_\+\+T\+R\+I\+G Class Reference}
+\label{class_f___t_r_i_g}\index{F\+\_\+\+T\+R\+I\+G@{F\+\_\+\+T\+R\+I\+G}}
+}
+
+
+Detect a falling edge.  
+
+
+
+
+{\ttfamily \#include $<$plc\+\_\+standardlib.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f___t_r_i_g_ab9d75d228a8576d4a5866587626b0c9d}{\hyperlink{class_f___t_r_i_g_ab9d75d228a8576d4a5866587626b0c9d}{F\+\_\+\+T\+R\+I\+G} ()}\label{class_f___t_r_i_g_ab9d75d228a8576d4a5866587626b0c9d}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{class_f___t_r_i_g_a50728be6f5641d091c75c2bd5a865750}{boolean \hyperlink{class_f___t_r_i_g_a50728be6f5641d091c75c2bd5a865750}{process} ()}\label{class_f___t_r_i_g_a50728be6f5641d091c75c2bd5a865750}
+
+\begin{DoxyCompactList}\small\item\em Call cyclic for data processing. \end{DoxyCompactList}\item 
+boolean \hyperlink{class_f___t_r_i_g_ae90a3b6c8501582d1795761943d19f7f}{process} (boolean clk)
+\begin{DoxyCompactList}\small\item\em Call cyclic for data processing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_f___t_r_i_g_abe250229fb5f6c3734eb5a6a232e2aa8}{boolean \hyperlink{class_f___t_r_i_g_abe250229fb5f6c3734eb5a6a232e2aa8}{C\+L\+K}}\label{class_f___t_r_i_g_abe250229fb5f6c3734eb5a6a232e2aa8}
+
+\begin{DoxyCompactList}\small\item\em Input variable. \end{DoxyCompactList}\item 
+\hypertarget{class_f___t_r_i_g_a56548c121c78806a44344a5d928e3a46}{boolean \hyperlink{class_f___t_r_i_g_a56548c121c78806a44344a5d928e3a46}{Q}}\label{class_f___t_r_i_g_a56548c121c78806a44344a5d928e3a46}
+
+\begin{DoxyCompactList}\small\item\em Output variable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Detect a falling edge. 
+
+Code sample\+: \begin{DoxyVerb}#include "plc_standardlib.h"
+#define X0 2
+
+F_TRIG trig;
+void setup() {
+    pinMode(X0, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(X0);
+    trig.process(x0);
+    if (trig.Q) {
+        Serial.println("This was a falling edge.");
+    }
+}\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_f___t_r_i_g_ae90a3b6c8501582d1795761943d19f7f}{\index{F\+\_\+\+T\+R\+I\+G@{F\+\_\+\+T\+R\+I\+G}!process@{process}}
+\index{process@{process}!F\+\_\+\+T\+R\+I\+G@{F\+\_\+\+T\+R\+I\+G}}
+\subsubsection[{process}]{\setlength{\rightskip}{0pt plus 5cm}boolean F\+\_\+\+T\+R\+I\+G\+::process (
+\begin{DoxyParamCaption}
+\item[{boolean}]{clk}
+\end{DoxyParamCaption}
+)}}\label{class_f___t_r_i_g_ae90a3b6c8501582d1795761943d19f7f}
+
+
+Call cyclic for data processing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in} & value for input variable \\
+\hline
+\end{DoxyParams}
+
+
+References C\+L\+K, and process().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+plc\+\_\+standardlib.\+h\item 
+plc\+\_\+standardlib.\+cpp\end{DoxyCompactItemize}

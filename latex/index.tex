@@ -1,0 +1,236 @@
+\section*{Overview}
+
+The purpose of this library is to supply basic functions and objects used in plc programming to the Arduino world. It refers to the functionality of the {\itshape Standard.\+lib} of 3\+S Co\+De\+Sys v2. This library contains functions and function blocks claimed by I\+E\+C61131-\/3.
+
+I will try to include an increasing number of functions and function blocks in this library. As this takes some time I will appreciate any help in this matter.
+
+Further informations about the specific functions and objects can be found in the Co\+De\+Sys v2 manual.
+
+The library consists of these sections\+:
+
+
+\begin{DoxyItemize}
+\item Bistable Latches
+\item Timer
+\item Edge detection
+\end{DoxyItemize}
+
+\section*{Standardlib}
+
+\subsection*{Bistable Latches}
+
+\subsubsection*{\hyperlink{class_s_r}{S\+R}}
+
+Bistable function block with dominating set.
+
+{\bfseries Code Sample\+:} \begin{DoxyVerb}#include "plc_standardlib.h"
+
+SR sr_latch;
+R_TRIG rtrig;
+F_TRIG ftrig;
+
+void setup() {
+    pinMode(0, INPUT_PULLUP);
+    pinMode(1, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(0); //set switch
+    boolean x1 = !digitalRead(1); //reset switch
+
+    sr_latch.process(x0, x1);
+    rtrig.process(sr_latch.Q1);
+    ftrig.process(sr_latch.Q1);
+
+    if (rtrig.Q) {
+        Serial.println("On");
+    }
+    if (ftrig.Q) {
+        Serial.println("Off");
+    }
+}
+\end{DoxyVerb}
+
+
+\subsubsection*{\hyperlink{class_r_s}{R\+S}}
+
+Bistable function block with dominating reset.
+
+{\bfseries Code sample\+:} \begin{DoxyVerb}#include "plc_standardlib.h"
+
+RS rs_latch;
+R_TRIG rtrig;
+F_TRIG ftrig;
+
+void setup() {
+    pinMode(0, INPUT_PULLUP);
+    pinMode(1, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(0); //set switch
+    boolean x1 = !digitalRead(1); //reset switch
+
+    rs_latch.process(x0, x1);
+    rtrig.process(rs_latch.Q1);
+    ftrig.process(rs_latch.Q1);
+
+    if (rtrig.Q) {
+        Serial.println("On");
+    }
+    if (ftrig.Q) {
+        Serial.println("Off");
+    }
+}
+\end{DoxyVerb}
+
+
+\subsubsection*{\hyperlink{class_s_e_m_a}{S\+E\+M\+A}}
+
+Software semaphore (interruptable) If \hyperlink{class_s_e_m_a_acf691410eccec2dafad4f12f9a5e4302}{S\+E\+M\+A\+::process()} is called and \hyperlink{class_s_e_m_a_af4df5a7c16c99bfc19f4902046ba26f9}{S\+E\+M\+A\+::\+B\+U\+S\+Y} is True this means the semaphore has already been claimed before by some other code part. If \hyperlink{class_s_e_m_a_af4df5a7c16c99bfc19f4902046ba26f9}{S\+E\+M\+A\+::\+B\+U\+S\+Y} is False the semaphore has not been claimed yet or was released (\hyperlink{class_s_e_m_a_a2660b1bd98ee2aac42e34d10179d6a4f}{S\+E\+M\+A\+::\+R\+E\+L\+E\+A\+S\+E} = True).
+
+{\bfseries Code sample\+:} \begin{DoxyVerb}#include "plc_standardlib.h"
+#define X0 2
+#define X1 3
+
+SEMA semaphore;
+R_TRIG trigger;
+
+void setup() {
+    pinMode(X0, INPUT_PULLUP);
+    pinMode(X1, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(X0); //claim
+    boolean x1 = !digitalRead(X1); //release
+    boolean was_busy = semaphore.BUSY;
+    semaphore.CLAIM = x0;
+    semaphore.RELEASE = x1;
+    semaphore.process();
+    trigger.process(x0 || x1);
+    if (trigger.Q) {
+        if (x0) {
+            if (semaphore.BUSY) {
+                Serial.println("Resource is busy.");
+            }
+            else {
+                Serial.println("Resource claimed successfully.");
+            }
+        }
+        if (x1) {
+            if (was_busy) {
+                Serial.println("Resource released.");
+            }
+            else {
+                Serial.println("Nothing to release.");
+            }
+        }
+    }
+}
+\end{DoxyVerb}
+
+
+\subsection*{Timer}
+
+\subsubsection*{\hyperlink{class_t_o_n}{T\+O\+N}}
+
+Realise a Switch-\/\+On delay.
+
+{\bfseries Code Sample\+:} \begin{DoxyVerb}#include "plc_standardlib.h"
+#define X0 2
+
+TON ton(1000);  // Initialise ton delay object
+R_TRIG rtrig;
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(X0, INPUT_PULLUP);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(X0);
+    ton.process(x0);
+    rtrig.process(ton.Q);
+    if (rtrig.Q) {
+        Serial.println("I waited 1 second.");
+    }
+}
+\end{DoxyVerb}
+
+
+\subsubsection*{\hyperlink{class_t_o_f}{T\+O\+F}}
+
+Realise a Switch-\/\+Off delay.
+
+{\bfseries Code Sample\+:} \begin{DoxyVerb}#include "plc_standardlib.h"
+#define X0 2
+
+TOF tof(1000);  // Initialise ton delay object
+F_TRIG ftrig;
+
+void setup() {
+    Serial.begin(9600);
+    pinMode(X0, INPUT_PULLUP);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(X0);
+    tof.process(x0);
+    ftrig.process(tof.Q);
+    if (ftrig.Q) {
+        Serial.println("I waited 1 second.");
+    }
+}
+\end{DoxyVerb}
+
+
+\subsection*{Edge detection}
+
+\subsubsection*{\hyperlink{class_r___t_r_i_g}{R\+\_\+\+T\+R\+I\+G}}
+
+Detect a rising edge.
+
+{\bfseries Code Sample\+:} \begin{DoxyVerb}#include "plc_standardlib.h"
+#define X0 2
+
+R_TRIG trig;
+void setup() {
+    pinMode(X0, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(X0);
+    trig.process(x0);
+    if (trig.Q) {
+        Serial.println("This was a rising edge.");
+    }
+}
+\end{DoxyVerb}
+
+
+\subsubsection*{\hyperlink{class_f___t_r_i_g}{F\+\_\+\+T\+R\+I\+G}}
+
+Detect a falling edge.
+
+$\ast$$\ast$ Code Sample\+:$\ast$$\ast$ \begin{DoxyVerb}#include "plc_standardlib.h"
+#define X0 2
+
+F_TRIG trig;
+void setup() {
+    pinMode(X0, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(X0);
+    trig.process(x0);
+    if (trig.Q) {
+        Serial.println("This was a falling edge.");
+    }
+}\end{DoxyVerb}
+ 

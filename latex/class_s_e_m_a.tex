@@ -1,0 +1,86 @@
+\hypertarget{class_s_e_m_a}{\section{S\+E\+M\+A Class Reference}
+\label{class_s_e_m_a}\index{S\+E\+M\+A@{S\+E\+M\+A}}
+}
+
+
+Software semaphore (interruptable)  
+
+
+
+
+{\ttfamily \#include $<$plc\+\_\+standardlib.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_m_a_acf691410eccec2dafad4f12f9a5e4302}{boolean \hyperlink{class_s_e_m_a_acf691410eccec2dafad4f12f9a5e4302}{process} ()}\label{class_s_e_m_a_acf691410eccec2dafad4f12f9a5e4302}
+
+\begin{DoxyCompactList}\small\item\em Cyclic call for data processing. \end{DoxyCompactList}\item 
+\hypertarget{class_s_e_m_a_a8e8c20a2231d22ee4b31aae82fdb2fae}{boolean \hyperlink{class_s_e_m_a_a8e8c20a2231d22ee4b31aae82fdb2fae}{process} (boolean claim, boolean release)}\label{class_s_e_m_a_a8e8c20a2231d22ee4b31aae82fdb2fae}
+
+\begin{DoxyCompactList}\small\item\em Cyclic call for data processing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_s_e_m_a_a6d50fd4f36d3de131968fc4199e97a68}{boolean \hyperlink{class_s_e_m_a_a6d50fd4f36d3de131968fc4199e97a68}{C\+L\+A\+I\+M}}\label{class_s_e_m_a_a6d50fd4f36d3de131968fc4199e97a68}
+
+\begin{DoxyCompactList}\small\item\em Claim the resource. \end{DoxyCompactList}\item 
+\hypertarget{class_s_e_m_a_a2660b1bd98ee2aac42e34d10179d6a4f}{boolean \hyperlink{class_s_e_m_a_a2660b1bd98ee2aac42e34d10179d6a4f}{R\+E\+L\+E\+A\+S\+E}}\label{class_s_e_m_a_a2660b1bd98ee2aac42e34d10179d6a4f}
+
+\begin{DoxyCompactList}\small\item\em Release the resource. \end{DoxyCompactList}\item 
+\hypertarget{class_s_e_m_a_af4df5a7c16c99bfc19f4902046ba26f9}{boolean \hyperlink{class_s_e_m_a_af4df5a7c16c99bfc19f4902046ba26f9}{B\+U\+S\+Y}}\label{class_s_e_m_a_af4df5a7c16c99bfc19f4902046ba26f9}
+
+\begin{DoxyCompactList}\small\item\em Resource is busy if True. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Software semaphore (interruptable) 
+
+If \hyperlink{class_s_e_m_a_acf691410eccec2dafad4f12f9a5e4302}{process()} is called and \hyperlink{class_s_e_m_a_af4df5a7c16c99bfc19f4902046ba26f9}{S\+E\+M\+A\+::\+B\+U\+S\+Y} is True this means the semaphore has already been claimed before by some other code part. If \hyperlink{class_s_e_m_a_af4df5a7c16c99bfc19f4902046ba26f9}{S\+E\+M\+A\+::\+B\+U\+S\+Y} is False the semaphore has not been claimed yet or was released (\hyperlink{class_s_e_m_a_a2660b1bd98ee2aac42e34d10179d6a4f}{S\+E\+M\+A\+::\+R\+E\+L\+E\+A\+S\+E} = True).
+
+Code sample\+: \begin{DoxyVerb}#include "plc_standardlib.h"
+#define X0 2
+#define X1 3
+
+SEMA semaphore;
+R_TRIG trigger;
+
+void setup() {
+    pinMode(X0, INPUT_PULLUP);
+    pinMode(X1, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+
+void loop() {
+    boolean x0 = !digitalRead(X0); //claim
+    boolean x1 = !digitalRead(X1); //release
+    boolean was_busy = semaphore.BUSY;
+    semaphore.CLAIM = x0;
+    semaphore.RELEASE = x1;
+    semaphore.process();
+    trigger.process(x0 || x1);
+    if (trigger.Q) {
+        if (x0) {
+            if (semaphore.BUSY) {
+                Serial.println("Resource is busy.");
+            }
+            else {
+                Serial.println("Resource claimed successfully.");
+            }
+        }
+        if (x1) {
+            if (was_busy) {
+                Serial.println("Resource released.");
+            }
+            else {
+                Serial.println("Nothing to release.");
+            }
+        }
+    }
+}\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+plc\+\_\+standardlib.\+h\item 
+plc\+\_\+standardlib.\+cpp\end{DoxyCompactItemize}
