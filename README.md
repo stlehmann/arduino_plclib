@@ -7,9 +7,8 @@
 # Overview
 
 The purpose of this library is to supply basic functions and objects used in
-plc programming to the Arduino world. It refers to the functionality of the
-*Standard.lib* of 3S CoDeSys v2. This library contains functions and
-function blocks claimed by IEC61131-3.
+plc programming to the Arduino world. It leans on to the functionality of the
+*Standard.lib* of CoDeSys v2 defined in IEC61131-3.
 
 I will try to include an increasing number of functions and function blocks
 in this library. As this takes some time I will appreciate any help in this
