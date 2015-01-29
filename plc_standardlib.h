@@ -4,6 +4,7 @@
 #define plc_standardlib_H
 
 #define ulong unsigned long
+#define uint unsigned int
 /*
 TP
 */
@@ -424,4 +425,215 @@ public:
     boolean process();
     //!Cyclic call for data processing
     boolean process(boolean claim, boolean release);
+};
+
+// === COUNTER ===
+/*
+CTU
+*/
+//!Upward counter
+/*!
+    If CTU::RESET is true the counter value CTU::CV is initialised by 0. If there
+    is a rising edge on CTU::CU the counter value CTU::CV is increased by 1.
+    CTU::Q is set to true if CTU::CV is bigger than or equal to CTU::PV.
+
+    Code sample:
+
+        #include "plc_standardlib.h"
+        #define X0 2
+        #define X1 3
+
+        CTU ctu;
+        R_TRIG rtrig;
+
+        void setup() {
+            pinMode(X0, INPUT_PULLUP);
+            pinMode(X1, INPUT_PULLUP);
+            Serial.begin(9600);
+            ctu.PV = 10; //set upper limit of counter
+        }
+
+        void loop() {
+            boolean x0 = !digitalRead(X0); //count up
+            boolean x1 = !digitalRead(X1); //reset
+            ctu.process(x0, x1);
+            rtrig.process(x0 || x1);
+            if (rtrig.Q) {
+                Serial.print("Counter: ");
+                Serial.print(ctu.CV);
+                Serial.print(", ");
+                Serial.print("Output: ");
+                Serial.println(ctu.Q);
+            }
+        }
+*/
+class CTU {
+private:
+    boolean cu_old;
+public:
+    //!Input variable for counting up
+    boolean CU;
+    //!Input variable for reset
+    boolean RESET;
+    //!Output variable limit reached
+    boolean Q;
+    //!Counter limit
+    uint PV;
+    //!Current counter value
+    uint CV;
+
+    //!Constructor
+    CTU(uint pv=0);
+    //!Cyclic call for data processing
+    boolean process();
+    //!Cyclic call for data processing with input variables
+    boolean process(boolean cu, boolean reset);
+};
+
+/*
+CTD
+*/
+//!Downward counter
+/*!
+    If CTD::LOAD is true the counter variable CTD::CV is initialised to the
+    upper limit CTD::PV. If there is a rising edge on CTD::CD the counter value
+    CTD::CV is decreased by one as long as CTD::CV is bigger than 0.
+    The output variable CTD::Q is set to true if CTD::CV is equal to 0.
+
+    Code sample:
+        #include "plc_standardlib.h"
+        #define X0 2
+        #define X1 3
+
+        CTD ctd;
+        R_TRIG rtrig;
+
+        void setup() {
+            pinMode(X0, INPUT_PULLUP);
+            pinMode(X1, INPUT_PULLUP);
+            Serial.begin(9600);
+            ctd.PV = 10; //set upper limit of counter
+        }
+
+        void loop() {
+            boolean x0 = !digitalRead(X0); //count up
+            boolean x1 = !digitalRead(X1); //reset
+            ctd.process(x0, x1);
+            rtrig.process(x0 || x1);
+            if (rtrig.Q) {
+                Serial.print("Counter: ");
+                Serial.print(ctd.CV);
+                Serial.print(", ");
+                Serial.print("Output: ");
+                Serial.println(ctd.Q);
+            }
+        }
+
+*/
+class CTD {
+private:
+    boolean cd_old;
+public:
+    //!Input variable for counting down
+    boolean CD;
+    //!Input variable for loading the upper limit CTD::PV
+    boolean LOAD;
+    //!Output variable
+    boolean Q;
+    //!Upper counter  limit
+    uint PV;
+    //!Current counter value
+    uint CV;
+
+    //!Constructor
+    CTD(uint pv=0);
+    //!Cyclic call for data processing
+    boolean process();
+    //!Cyclic call for data processing with input variables
+    boolean process(boolean cd, boolean load);
+};
+
+/*
+CTUD
+*/
+//!Up- and Downward counter
+/*!
+    If CTUD::RESET is true the counter variable CTUD::CV is initialised with 0.
+    If CTUD::LOAD is true the counter variable CTUD::CV is initialised with
+    the upper limit CTUD::PV.
+
+    If there is a rising edge on CTUD::CU the counter variable CTUD::CV
+    is increased by 1.
+    If there is a rising edge on CTUD::CD the counter variable CTUD::CV
+    is decreased by 1 as long as it is greater then 0.
+
+    CTUD::QU becomes true if the counter variable CTUD::CV is greater then or
+    equal to the upper limit CTUD::PV.
+    CTUD::QD becomes true if the counter variable CTUD::CV is 0.
+
+    Code sample:
+
+        #include "plc_standardlib.h"
+        #define X0 2
+        #define X1 3
+
+        CTUD ctud;
+        R_TRIG rtrig;
+
+        void setup() {
+            pinMode(X0, INPUT_PULLUP);
+            pinMode(X1, INPUT_PULLUP);
+            Serial.begin(9600);
+            ctud.PV = 10; //set upper limit of counter
+        }
+
+        void loop() {
+            boolean x0 = !digitalRead(X0); //count up
+            boolean x1 = !digitalRead(X1); //count down
+            boolean rst = x0 && x1; //reset
+
+            ctud.CU = x0;
+            ctud.CD = x1;
+            ctud.RESET = rst;
+            ctud.process();
+            rtrig.process(x0 || x1 || rst);
+
+            if (rtrig.Q) {
+                Serial.print("Counter: ");
+                Serial.print(ctud.CV);
+                Serial.print(", QU: ");
+                Serial.print(ctud.QU);
+                Serial.print(", QD: ");
+                Serial.println(ctud.QD);
+            }
+        }
+*/
+class CTUD {
+private:
+    boolean cu_old;
+    boolean cd_old;
+public:
+    //!Input variable for counting up
+    boolean CU;
+    //!Input variable for counting down
+    boolean CD;
+    //!Input variable for resetting counter value to 0
+    boolean RESET;
+    //!Input variable for loading the upper limit CTD::PV
+    boolean LOAD;
+    //!Output variable upper limit reached
+    boolean QU;
+    //!Output varialbe lower limit reached
+    boolean QD;
+    //!Upper counter limit
+    uint PV;
+    //!Current counter value
+    uint CV;
+
+    //!Constructor
+    CTUD(uint pv=0);
+    //!Cyclic call for data processing
+    boolean process();
+    //!Cyclic call for data processing with input variables
+    boolean process(boolean cu, boolean cd, boolean reset, boolean load);
 };

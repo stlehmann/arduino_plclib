@@ -236,3 +236,110 @@ boolean SEMA::process(boolean claim, boolean release) {
     RELEASE = release;
     return process();
 }
+
+/*
+CTU
+*/
+CTU::CTU(uint pv) {
+    CU = false;
+    RESET = false;
+    Q = false;
+    PV = pv;
+    CV = 0;
+    cu_old = false;
+}
+
+boolean CTU::process() {
+    if (RESET) {
+        CV = 0;
+    }
+    if (CU &! cu_old) {
+        CV++;
+    }
+    Q = (CV >= PV);
+    cu_old = CU;
+    return Q;
+}
+
+boolean CTU::process(boolean cu, boolean reset) {
+    CU = cu;
+    RESET = reset;
+    return process();
+}
+
+/*
+CTD
+*/
+CTD::CTD(uint pv) {
+    CD = false;
+    LOAD = false;
+    Q = false;
+    PV = pv;
+    CV = 0;
+    cd_old = false;
+}
+
+boolean CTD::process() {
+    if (LOAD) {
+        CV = PV;
+    }
+    if (CD &! cd_old) {
+        if (CV > 0) {
+            CV--;
+        }
+    }
+    Q = (CV == 0);
+    cd_old = CD;
+    return Q;
+}
+
+boolean CTD::process(boolean cd, boolean load) {
+    CD = cd;
+    LOAD = load;
+    return process();
+}
+
+/*
+CTUD
+*/
+CTUD::CTUD(uint pv) {
+    CU = false;
+    CD = false;
+    RESET = false;
+    LOAD = false;
+    QU = false;
+    QD = false;
+    PV = pv;
+    CV = 0;
+    cu_old = false;
+    cd_old = false;
+}
+
+boolean CTUD::process() {
+    if (RESET) {
+        CV = 0;
+    }
+    else if (LOAD) {
+        CV = PV;
+    }
+    if (CU &! cu_old) {
+        CV++;
+    }
+    if (CD &! cd_old) {
+        if (CV > 0) {
+            CV--;
+        }
+    }
+    QU = (CV >= PV);
+    QD = (CV == 0);
+    cu_old = CU;
+    cd_old = CD;
+}
+
+boolean CTUD::process(boolean cu, boolean cd, boolean reset, boolean load) {
+    CU = cu;
+    CD = cd;
+    RESET = reset;
+    LOAD = load;
+    return process();
+}
