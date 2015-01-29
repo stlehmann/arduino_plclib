@@ -1,6 +1,49 @@
 #include "plc_standardlib.h"
 
 /*
+TP
+*/
+TP::TP() {
+    IN = false;
+    PT = 0;
+    Q = false;
+    ET = 0;
+}
+
+TP::TP(ulong pt) {
+    IN = false;
+    PT = pt;
+    Q = false;
+    ET = 0;
+    t0 = 0;
+}
+
+boolean TP::process() {
+    if (IN) {
+        if (t0==0) {
+            t0 = millis();
+        }
+    }
+    if (t0 > 0) {
+        ET = millis() - t0;
+        if (ET >= PT) {
+            ET = PT;
+        }
+    }
+    if (!IN && ET == PT) {
+        t0 = 0;
+        ET = 0;
+    }
+    Q = ET > 0 && ET < PT;
+    return Q;
+}
+
+boolean TP::process(boolean in) {
+    IN = in;
+    return process();
+}
+
+/*
 TON
 */
 TON::TON(ulong pt) {

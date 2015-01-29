@@ -4,6 +4,69 @@
 #define plc_standardlib_H
 
 #define ulong unsigned long
+/*
+TP
+*/
+//!Realise an impulse of a defined length.
+/*!
+    If TP::IN gets True TP::ET will be increased until it equals TP::PT,
+    then it stays constant. TP::Q becomes True if TP::IN changed to True
+    and TP::ET is smaller then TP::PT. Otherwise TP::Q is False.
+    So TP::Q provides an impulse during the impulse time TP::PT.
+
+    Code sample:
+
+        #include "plc_standardlib.h"
+
+        #define X0 2
+
+        TP tp(1000);  // Initialise tp impulse object
+        R_TRIG rtrig;
+        F_TRIG ftrig;
+
+        void setup() {
+            Serial.begin(9600);
+            pinMode(X0, INPUT_PULLUP);
+        }
+
+        void loop() {
+            boolean x0 = !digitalRead(X0);
+
+            tp.process(x0);
+            rtrig.process(tp.Q);
+            ftrig.process(tp.Q);
+
+            if (rtrig.Q) {
+                Serial.println("Impulse comming.");
+            }
+            if (ftrig.Q) {
+                Serial.println("Impulse going.");
+            }
+        }
+*/
+class TP {
+private:
+    ulong t0;
+public:
+    //!Input variable
+    boolean IN;
+    //!Impulse length in milliseconds
+    ulong PT;
+    //!Output variable
+    boolean Q;
+    //!Elapsed time in milliseconds
+    ulong ET;
+
+    //!Constructor
+    TP();
+    //!Constructor with inpulse length
+    TP(ulong pt);
+    //!Cyclic for data processing
+    boolean process();
+    //!Cyclic for data processing with input parameter
+    boolean process(boolean in);
+};
+
 
 /*
 TON

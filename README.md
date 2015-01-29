@@ -145,6 +145,41 @@ has not been claimed yet or was released (SEMA::RELEASE = True).
 
 ## Timer
 
+### TP
+
+Realise an impulse of a defined length.
+
+**Code Sample:**
+
+    #include "plc_standardlib.h"
+
+    #define X0 2
+
+    TP tp(1000);  // Initialise tp impulse object
+    R_TRIG rtrig;
+    F_TRIG ftrig;
+
+    void setup() {
+        Serial.begin(9600);
+        pinMode(X0, INPUT_PULLUP);
+    }
+
+    void loop() {
+        boolean x0 = !digitalRead(X0);
+
+        tp.process(x0);
+        rtrig.process(tp.Q);
+        ftrig.process(tp.Q);
+
+        if (rtrig.Q) {
+            Serial.println("Impulse comming.");
+        }
+        if (ftrig.Q) {
+            Serial.println("Impulse going.");
+        }
+    }
+
+
 ### TON
 
 Realise a Switch-On delay.
@@ -225,7 +260,7 @@ Detect a rising edge.
 ### F_TRIG
 Detect a falling edge.
 
-** Code Sample:**
+**Code Sample:**
 
     #include "plc_standardlib.h"
     #define X0 2
