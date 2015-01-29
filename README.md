@@ -1,5 +1,9 @@
 # plc_standardlib Library
 
+author: Stefan Lehmann
+email: MrLeeh@gmx.de
+license: GNU GPL v2.0
+
 # Overview
 
 The purpose of this library is to supply basic functions and objects used in
