@@ -1,8 +1,8 @@
 # plc_standardlib Library
 
-author: Stefan Lehmann
-email: MrLeeh@gmx.de
-license: GNU GPL v2.0
+* **version**: 1.0.1
+* **license**: GNU GPL v2.0
+* **author**: Stefan Lehmann, MrLeeh@gmx.de
 
 # Overview
 
