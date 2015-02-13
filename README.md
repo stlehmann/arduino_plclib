@@ -1,7 +1,7 @@
 # plc_standardlib Library
 
 * **version**: 1.0.1
-* **license**: GNU GPL v2.0
+* **license**: MIT License
 * **author**: Stefan Lehmann, MrLeeh@gmx.de
 
 # Overview
