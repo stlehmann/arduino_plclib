@@ -354,7 +354,6 @@ public:
     boolean process();
     boolean process(boolean set, boolean reset1);
 };
-#endif
 
 /*
 SEMA
@@ -637,3 +636,5 @@ public:
     //!Cyclic call for data processing with input variables
     boolean process(boolean cu, boolean cd, boolean reset, boolean load);
 };
+
+#endif
