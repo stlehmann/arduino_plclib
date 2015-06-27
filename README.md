@@ -1,4 +1,4 @@
-# plc_standardlib Library
+# Arduino stdlib Library
 
 * **version**: 1.0.1
 * **license**: MIT License
