@@ -1,6 +1,6 @@
 # Arduino plclib Library
 
-* **version**: 1.0.1
+* **version**: 1.0.2
 * **license**: MIT License
 * **author**: Stefan Lehmann, MrLeeh@gmx.de
 
