@@ -32,7 +32,7 @@ The library consists of these sections:
 
 **Code Sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
 
     SR sr_latch;
     R_TRIG rtrig;
@@ -64,7 +64,7 @@ The library consists of these sections:
 
 **Code sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
 
     RS rs_latch;
     R_TRIG rtrig;
@@ -100,7 +100,7 @@ has not been claimed yet or was released (SEMA::RELEASE = True).
 
 **Code sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
     #define X1 3
 
@@ -148,7 +148,7 @@ has not been claimed yet or was released (SEMA::RELEASE = True).
 
 **Code Sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
 
     #define X0 2
 
@@ -181,7 +181,7 @@ has not been claimed yet or was released (SEMA::RELEASE = True).
 
 **Code Sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
 
     TON ton(1000);  // Initialise ton delay object
@@ -205,7 +205,7 @@ has not been claimed yet or was released (SEMA::RELEASE = True).
 
 **Code Sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
 
     TOF tof(1000);  // Initialise ton delay object
@@ -231,7 +231,7 @@ has not been claimed yet or was released (SEMA::RELEASE = True).
 
 **Code Sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
 
     R_TRIG trig;
@@ -252,7 +252,7 @@ has not been claimed yet or was released (SEMA::RELEASE = True).
 
 **Code Sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
 
     F_TRIG trig;
@@ -279,7 +279,7 @@ CTU::Q is set to true if CTU::CV is bigger than or equal to CTU::PV.
 
 **Code Sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
     #define X1 3
 
@@ -316,7 +316,7 @@ The output variable CTD::Q is set to true if CTD::CV is equal to 0.
 
 Code sample:
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
     #define X1 3
 
@@ -361,7 +361,7 @@ CTUD::QD becomes true if the counter variable CTUD::CV is 0.
 
 **Code sample:**
 
-    #include "plc_standardlib.h"
+    #include "plclib.h"
     #define X0 2
     #define X1 3
 
