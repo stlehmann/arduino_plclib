@@ -18,7 +18,7 @@ TP::TP(ulong pt) {
     t0 = 0;
 }
 
-boolean TP::process() {
+bool TP::process() {
     if (IN) {
         if (t0==0) {
             t0 = millis();
@@ -38,7 +38,7 @@ boolean TP::process() {
     return Q;
 }
 
-boolean TP::process(boolean in) {
+bool TP::process(boolean in) {
     IN = in;
     return process();
 }
@@ -54,7 +54,7 @@ TON::TON(ulong pt) {
   t0 = 0;
 }
 
-boolean TON::process() {
+bool TON::process() {
   if (!IN) {
     ET = 0;
     t0 = 0;
@@ -73,7 +73,7 @@ boolean TON::process() {
   return Q;
 }
 
-boolean TON::process(boolean in) {
+bool TON::process(boolean in) {
   IN = in;
   return process();
 }
@@ -89,7 +89,7 @@ TOF::TOF(ulong pt) {
   t0 = 0;
 }
 
-boolean TOF::process() {
+bool TOF::process() {
   if (IN) {
     ET = 0;
     t0 = 0;
@@ -108,7 +108,7 @@ boolean TOF::process() {
   return Q;
 }
 
-boolean TOF::process(boolean in) {
+bool TOF::process(boolean in) {
   IN = in;
   return process();
 }
@@ -122,13 +122,13 @@ R_TRIG::R_TRIG() {
   m = false;
 }
 
-boolean R_TRIG::process() {
+bool R_TRIG::process() {
   Q = CLK && !m;
   m = CLK;
   return Q;
 }
 
-boolean R_TRIG::process(boolean clk) {
+bool R_TRIG::process(boolean clk) {
   CLK = clk;
   return process();
 }
@@ -142,13 +142,13 @@ F_TRIG::F_TRIG() {
   m = false;
 }
 
-boolean F_TRIG::process() {
+bool F_TRIG::process() {
   Q = !CLK && m;
   m = CLK;
   return Q;
 }
 
-boolean F_TRIG::process(boolean clk) {
+bool F_TRIG::process(boolean clk) {
   CLK = clk;
   return process();
 }
@@ -162,7 +162,7 @@ SR::SR() {
     Q1 = false;
 }
 
-boolean SR::process() {
+bool SR::process() {
     if (SET1) {
         Q1 = true;
     }
@@ -174,7 +174,7 @@ boolean SR::process() {
     return Q1;
 }
 
-boolean SR::process(boolean set1, boolean reset) {
+bool SR::process(boolean set1, boolean reset) {
     SET1 = set1;
     RESET = reset;
     return process();
@@ -189,7 +189,7 @@ RS::RS() {
     Q1 = false;
 }
 
-boolean RS::process() {
+bool RS::process() {
     if (RESET1) {
         Q1 = false;
     }
@@ -201,7 +201,7 @@ boolean RS::process() {
     return Q1;
 }
 
-boolean RS::process(boolean set, boolean reset1) {
+bool RS::process(boolean set, boolean reset1) {
     SET = set;
     RESET1 = reset1;
     return process();
@@ -217,7 +217,7 @@ SEMA::SEMA() {
     x = false;
 }
 
-boolean SEMA::process() {
+bool SEMA::process() {
     BUSY = x;
     if (CLAIM) {
         x = true;
@@ -231,7 +231,7 @@ boolean SEMA::process() {
     return BUSY;
 }
 
-boolean SEMA::process(boolean claim, boolean release) {
+bool SEMA::process(boolean claim, boolean release) {
     CLAIM = claim;
     RELEASE = release;
     return process();
@@ -249,7 +249,7 @@ CTU::CTU(uint pv) {
     cu_old = false;
 }
 
-boolean CTU::process() {
+bool CTU::process() {
     if (RESET) {
         CV = 0;
     }
@@ -261,7 +261,7 @@ boolean CTU::process() {
     return Q;
 }
 
-boolean CTU::process(boolean cu, boolean reset) {
+bool CTU::process(boolean cu, boolean reset) {
     CU = cu;
     RESET = reset;
     return process();
@@ -279,7 +279,7 @@ CTD::CTD(uint pv) {
     cd_old = false;
 }
 
-boolean CTD::process() {
+bool CTD::process() {
     if (LOAD) {
         CV = PV;
     }
@@ -293,7 +293,7 @@ boolean CTD::process() {
     return Q;
 }
 
-boolean CTD::process(boolean cd, boolean load) {
+bool CTD::process(boolean cd, boolean load) {
     CD = cd;
     LOAD = load;
     return process();
@@ -315,7 +315,7 @@ CTUD::CTUD(uint pv) {
     cd_old = false;
 }
 
-boolean CTUD::process() {
+bool CTUD::process() {
     if (RESET) {
         CV = 0;
     }
@@ -336,7 +336,7 @@ boolean CTUD::process() {
     cd_old = CD;
 }
 
-boolean CTUD::process(boolean cu, boolean cd, boolean reset, boolean load) {
+bool CTUD::process(boolean cu, boolean cd, boolean reset, boolean load) {
     CU = cu;
     CD = cd;
     RESET = reset;
