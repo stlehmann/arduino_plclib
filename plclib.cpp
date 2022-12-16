@@ -38,7 +38,7 @@ bool TP::process() {
     return Q;
 }
 
-bool TP::process(boolean in) {
+bool TP::process(bool in) {
     IN = in;
     return process();
 }
@@ -73,7 +73,7 @@ bool TON::process() {
   return Q;
 }
 
-bool TON::process(boolean in) {
+bool TON::process(bool in) {
   IN = in;
   return process();
 }
@@ -108,7 +108,7 @@ bool TOF::process() {
   return Q;
 }
 
-bool TOF::process(boolean in) {
+bool TOF::process(bool in) {
   IN = in;
   return process();
 }
@@ -128,7 +128,7 @@ bool R_TRIG::process() {
   return Q;
 }
 
-bool R_TRIG::process(boolean clk) {
+bool R_TRIG::process(bool clk) {
   CLK = clk;
   return process();
 }
@@ -148,7 +148,7 @@ bool F_TRIG::process() {
   return Q;
 }
 
-bool F_TRIG::process(boolean clk) {
+bool F_TRIG::process(bool clk) {
   CLK = clk;
   return process();
 }
@@ -174,7 +174,7 @@ bool SR::process() {
     return Q1;
 }
 
-bool SR::process(boolean set1, boolean reset) {
+bool SR::process(bool set1, bool reset) {
     SET1 = set1;
     RESET = reset;
     return process();
@@ -201,7 +201,7 @@ bool RS::process() {
     return Q1;
 }
 
-bool RS::process(boolean set, boolean reset1) {
+bool RS::process(bool set, bool reset1) {
     SET = set;
     RESET1 = reset1;
     return process();
@@ -231,7 +231,7 @@ bool SEMA::process() {
     return BUSY;
 }
 
-bool SEMA::process(boolean claim, boolean release) {
+bool SEMA::process(bool claim, bool release) {
     CLAIM = claim;
     RELEASE = release;
     return process();
@@ -261,7 +261,7 @@ bool CTU::process() {
     return Q;
 }
 
-bool CTU::process(boolean cu, boolean reset) {
+bool CTU::process(bool cu, bool reset) {
     CU = cu;
     RESET = reset;
     return process();
@@ -293,7 +293,7 @@ bool CTD::process() {
     return Q;
 }
 
-bool CTD::process(boolean cd, boolean load) {
+bool CTD::process(bool cd, bool load) {
     CD = cd;
     LOAD = load;
     return process();
@@ -336,7 +336,7 @@ bool CTUD::process() {
     cd_old = CD;
 }
 
-bool CTUD::process(boolean cu, boolean cd, boolean reset, boolean load) {
+bool CTUD::process(bool cu, bool cd, bool reset, bool load) {
     CU = cu;
     CD = cd;
     RESET = reset;

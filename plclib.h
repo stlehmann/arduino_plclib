@@ -65,7 +65,7 @@ public:
     //!Cyclic for data processing
     bool process();
     //!Cyclic for data processing with input parameter
-    bool process(boolean in);
+    bool process(bool in);
 };
 
 
@@ -120,7 +120,7 @@ public:
   /*!
     \param in value for input variable
   */
-  bool process(boolean in);
+  bool process(bool in);
 };
 
 /*
@@ -175,7 +175,7 @@ public:
   /*!
   \param in value for input variable
   */
-  bool process(boolean in);
+  bool process(bool in);
 };
 
 /*
@@ -215,7 +215,7 @@ public:
   /*!
     \param in value for input variable
   */
-  bool process(boolean clk);
+  bool process(bool clk);
 private:
   bool m;
 };
@@ -258,7 +258,7 @@ public:
   /*!
   \param in value for input variable
   */
-  bool process(boolean clk);
+  bool process(bool clk);
 private:
   bool m;
 };
@@ -306,7 +306,7 @@ public:
 
     SR();
     bool process();
-    bool process(boolean set1, boolean reset);
+    bool process(bool set1, bool reset);
 };
 
 /*
@@ -352,7 +352,7 @@ public:
 
     RS();
     bool process();
-    bool process(boolean set, boolean reset1);
+    bool process(bool set, bool reset1);
 };
 
 /*
@@ -423,7 +423,7 @@ public:
     //!Cyclic call for data processing
     bool process();
     //!Cyclic call for data processing
-    bool process(boolean claim, boolean release);
+    bool process(bool claim, bool release);
 };
 
 // === COUNTER ===
@@ -486,7 +486,7 @@ public:
     //!Cyclic call for data processing
     bool process();
     //!Cyclic call for data processing with input variables
-    bool process(boolean cu, boolean reset);
+    bool process(bool cu, bool reset);
 };
 
 /*
@@ -549,7 +549,7 @@ public:
     //!Cyclic call for data processing
     bool process();
     //!Cyclic call for data processing with input variables
-    bool process(boolean cd, boolean load);
+    bool process(bool cd, bool load);
 };
 
 /*
@@ -634,7 +634,7 @@ public:
     //!Cyclic call for data processing
     bool process();
     //!Cyclic call for data processing with input variables
-    bool process(boolean cu, boolean cd, boolean reset, boolean load);
+    bool process(bool cu, bool cd, bool reset, bool load);
 };
 
 #endif
