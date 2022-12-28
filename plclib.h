@@ -1,5 +1,3 @@
-#include "Arduino.h"
-
 #ifndef plc_standardlib_H
 #define plc_standardlib_H
 
@@ -637,4 +635,6 @@ public:
     bool process(bool cu, bool cd, bool reset, bool load);
 };
 
+
+unsigned long plclib_millis();
 #endif

@@ -21,11 +21,11 @@ TP::TP(ulong pt) {
 bool TP::process() {
     if (IN) {
         if (t0==0) {
-            t0 = millis();
+            t0 = plclib_millis();
         }
     }
     if (t0 > 0) {
-        ET = millis() - t0;
+        ET = plclib_millis() - t0;
         if (ET >= PT) {
             ET = PT;
         }
@@ -62,9 +62,9 @@ bool TON::process() {
   }
   else {
     if (t0 == 0) {
-      t0 = millis();
+      t0 = plclib_millis();
     }
-    ET = millis() - t0;
+    ET = plclib_millis() - t0;
     if (ET >= PT) {
       ET = PT;
       Q = true;
@@ -97,9 +97,9 @@ bool TOF::process() {
   }
   else {
     if (t0 == 0) {
-      t0 = millis();
+      t0 = plclib_millis();
     }
-    ET = millis() - t0;
+    ET = plclib_millis() - t0;
   }
   if (ET >= PT) {
     ET = PT;
@@ -334,6 +334,7 @@ bool CTUD::process() {
     QD = (CV == 0);
     cu_old = CU;
     cd_old = CD;
+    return QU || QD;
 }
 
 bool CTUD::process(bool cu, bool cd, bool reset, bool load) {
