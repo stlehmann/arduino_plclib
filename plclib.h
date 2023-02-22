@@ -1,5 +1,3 @@
-#include "Arduino.h"
-
 #ifndef plc_standardlib_H
 #define plc_standardlib_H
 
@@ -31,7 +29,7 @@ TP
         }
 
         void loop() {
-            boolean x0 = !digitalRead(X0);
+            bool x0 = !digitalRead(X0);
 
             tp.process(x0);
             rtrig.process(tp.Q);
@@ -50,11 +48,11 @@ private:
     ulong t0;
 public:
     //!Input variable
-    boolean IN;
+    bool IN;
     //!Impulse length in milliseconds
     ulong PT;
     //!Output variable
-    boolean Q;
+    bool Q;
     //!Elapsed time in milliseconds
     ulong ET;
 
@@ -63,9 +61,9 @@ public:
     //!Constructor with inpulse length
     TP(ulong pt);
     //!Cyclic for data processing
-    boolean process();
+    bool process();
     //!Cyclic for data processing with input parameter
-    boolean process(boolean in);
+    bool process(bool in);
 };
 
 
@@ -88,7 +86,7 @@ TON
         }
 
         void loop() {
-            boolean x0 = !digitalRead(X0);
+            bool x0 = !digitalRead(X0);
             ton.process(x0);
             rtrig.process(ton.Q);
             if (rtrig.Q) {
@@ -101,11 +99,11 @@ private:
   ulong t0;
 public:
   //!Input variable
-  boolean IN;
+  bool IN;
   //!Switch-on delay in milliseconds
   ulong PT;
   //! Output variable
-  boolean Q;
+  bool Q;
   //! Elapsed time
   ulong ET;
 
@@ -115,12 +113,12 @@ public:
   */
   TON(ulong pt=0);
   //!Call cyclic for data processing
-  boolean process();
+  bool process();
   //!Call cyclic for data processing
   /*!
     \param in value for input variable
   */
-  boolean process(boolean in);
+  bool process(bool in);
 };
 
 /*
@@ -142,7 +140,7 @@ Code sample:
     }
 
     void loop() {
-        boolean x0 = !digitalRead(X0);
+        bool x0 = !digitalRead(X0);
         tof.process(x0);
         ftrig.process(tof.Q);
         if (ftrig.Q) {
@@ -156,11 +154,11 @@ private:
   ulong t0;
 public:
   //!Input variable
-  boolean IN;
+  bool IN;
   //!Switch-off delay in milliseconds
   ulong PT;
   //! Output variable
-  boolean Q;
+  bool Q;
   //! Elapsed time
   ulong ET;
 
@@ -170,12 +168,12 @@ public:
   */
   TOF(ulong pt=0);
   //!Call cyclic for data processing
-  boolean process();
+  bool process();
   //!Call cyclic for data processing
   /*!
   \param in value for input variable
   */
-  boolean process(boolean in);
+  bool process(bool in);
 };
 
 /*
@@ -194,7 +192,7 @@ R_TRIG
             Serial.begin(9600);
         }
         void loop() {
-            boolean x0 = !digitalRead(X0);
+            bool x0 = !digitalRead(X0);
             trig.process(x0);
             if (trig.Q) {
                 Serial.println("This was a rising edge.");
@@ -204,20 +202,20 @@ R_TRIG
 class R_TRIG {
 public:
   //!Input variable
-  boolean CLK;
+  bool CLK;
   //!Output variable
-  boolean Q;
+  bool Q;
   //!Constructor
   R_TRIG();
   //!Call cyclic for data processing
-  boolean process();
+  bool process();
   //!Call cyclic for data processing
   /*!
     \param in value for input variable
   */
-  boolean process(boolean clk);
+  bool process(bool clk);
 private:
-  boolean m;
+  bool m;
 };
 
 /*
@@ -237,7 +235,7 @@ F_TRIG
         }
 
         void loop() {
-            boolean x0 = !digitalRead(X0);
+            bool x0 = !digitalRead(X0);
             trig.process(x0);
             if (trig.Q) {
                 Serial.println("This was a falling edge.");
@@ -247,20 +245,20 @@ F_TRIG
 class F_TRIG {
 public:
   //!Input variable
-  boolean CLK;
+  bool CLK;
   //!Output variable
-  boolean Q;
+  bool Q;
   //!Constructor
   F_TRIG();
   //!Call cyclic for data processing
-  boolean process();
+  bool process();
   //!Call cyclic for data processing
   /*!
   \param in value for input variable
   */
-  boolean process(boolean clk);
+  bool process(bool clk);
 private:
-  boolean m;
+  bool m;
 };
 
 /*
@@ -283,8 +281,8 @@ SR
         }
 
         void loop() {
-            boolean x0 = !digitalRead(0); //set switch
-            boolean x1 = !digitalRead(1); //reset switch
+            bool x0 = !digitalRead(0); //set switch
+            bool x1 = !digitalRead(1); //reset switch
 
             sr_latch.process(x0, x1);
             rtrig.process(sr_latch.Q1);
@@ -300,13 +298,13 @@ SR
 */
 class SR {
 public:
-    boolean SET1;
-    boolean RESET;
-    boolean Q1;
+    bool SET1;
+    bool RESET;
+    bool Q1;
 
     SR();
-    boolean process();
-    boolean process(boolean set1, boolean reset);
+    bool process();
+    bool process(bool set1, bool reset);
 };
 
 /*
@@ -329,8 +327,8 @@ Code sample:
     }
 
     void loop() {
-        boolean x0 = !digitalRead(0); //set switch
-        boolean x1 = !digitalRead(1); //reset switch
+        bool x0 = !digitalRead(0); //set switch
+        bool x1 = !digitalRead(1); //reset switch
 
         rs_latch.process(x0, x1);
         rtrig.process(rs_latch.Q1);
@@ -346,13 +344,13 @@ Code sample:
 */
 class RS {
 public:
-    boolean SET;
-    boolean RESET1;
-    boolean Q1;
+    bool SET;
+    bool RESET1;
+    bool Q1;
 
     RS();
-    boolean process();
-    boolean process(boolean set, boolean reset1);
+    bool process();
+    bool process(bool set, bool reset1);
 };
 
 /*
@@ -380,9 +378,9 @@ SEMA
         }
 
         void loop() {
-            boolean x0 = !digitalRead(X0); //claim
-            boolean x1 = !digitalRead(X1); //release
-            boolean was_busy = semaphore.BUSY;
+            bool x0 = !digitalRead(X0); //claim
+            bool x1 = !digitalRead(X1); //release
+            bool was_busy = semaphore.BUSY;
             semaphore.CLAIM = x0;
             semaphore.RELEASE = x1;
             semaphore.process();
@@ -410,20 +408,20 @@ SEMA
 */
 class SEMA {
 private:
-    boolean x;
+    bool x;
 public:
     //!Claim the resource
-    boolean CLAIM;
+    bool CLAIM;
     //!Release the resource
-    boolean RELEASE;
+    bool RELEASE;
     //!Resource is busy if True.
-    boolean BUSY;
+    bool BUSY;
 
     SEMA();
     //!Cyclic call for data processing
-    boolean process();
+    bool process();
     //!Cyclic call for data processing
-    boolean process(boolean claim, boolean release);
+    bool process(bool claim, bool release);
 };
 
 // === COUNTER ===
@@ -453,8 +451,8 @@ CTU
         }
 
         void loop() {
-            boolean x0 = !digitalRead(X0); //count up
-            boolean x1 = !digitalRead(X1); //reset
+            bool x0 = !digitalRead(X0); //count up
+            bool x1 = !digitalRead(X1); //reset
             ctu.process(x0, x1);
             rtrig.process(x0 || x1);
             if (rtrig.Q) {
@@ -468,14 +466,14 @@ CTU
 */
 class CTU {
 private:
-    boolean cu_old;
+    bool cu_old;
 public:
     //!Input variable for counting up
-    boolean CU;
+    bool CU;
     //!Input variable for reset
-    boolean RESET;
+    bool RESET;
     //!Output variable limit reached
-    boolean Q;
+    bool Q;
     //!Counter limit
     uint PV;
     //!Current counter value
@@ -484,9 +482,9 @@ public:
     //!Constructor
     CTU(uint pv=0);
     //!Cyclic call for data processing
-    boolean process();
+    bool process();
     //!Cyclic call for data processing with input variables
-    boolean process(boolean cu, boolean reset);
+    bool process(bool cu, bool reset);
 };
 
 /*
@@ -515,8 +513,8 @@ CTD
         }
 
         void loop() {
-            boolean x0 = !digitalRead(X0); //count up
-            boolean x1 = !digitalRead(X1); //reset
+            bool x0 = !digitalRead(X0); //count up
+            bool x1 = !digitalRead(X1); //reset
             ctd.process(x0, x1);
             rtrig.process(x0 || x1);
             if (rtrig.Q) {
@@ -531,14 +529,14 @@ CTD
 */
 class CTD {
 private:
-    boolean cd_old;
+    bool cd_old;
 public:
     //!Input variable for counting down
-    boolean CD;
+    bool CD;
     //!Input variable for loading the upper limit CTD::PV
-    boolean LOAD;
+    bool LOAD;
     //!Output variable
-    boolean Q;
+    bool Q;
     //!Upper counter  limit
     uint PV;
     //!Current counter value
@@ -547,9 +545,9 @@ public:
     //!Constructor
     CTD(uint pv=0);
     //!Cyclic call for data processing
-    boolean process();
+    bool process();
     //!Cyclic call for data processing with input variables
-    boolean process(boolean cd, boolean load);
+    bool process(bool cd, bool load);
 };
 
 /*
@@ -587,9 +585,9 @@ CTUD
         }
 
         void loop() {
-            boolean x0 = !digitalRead(X0); //count up
-            boolean x1 = !digitalRead(X1); //count down
-            boolean rst = x0 && x1; //reset
+            bool x0 = !digitalRead(X0); //count up
+            bool x1 = !digitalRead(X1); //count down
+            bool rst = x0 && x1; //reset
 
             ctud.CU = x0;
             ctud.CD = x1;
@@ -609,21 +607,21 @@ CTUD
 */
 class CTUD {
 private:
-    boolean cu_old;
-    boolean cd_old;
+    bool cu_old;
+    bool cd_old;
 public:
     //!Input variable for counting up
-    boolean CU;
+    bool CU;
     //!Input variable for counting down
-    boolean CD;
+    bool CD;
     //!Input variable for resetting counter value to 0
-    boolean RESET;
+    bool RESET;
     //!Input variable for loading the upper limit CTD::PV
-    boolean LOAD;
+    bool LOAD;
     //!Output variable upper limit reached
-    boolean QU;
+    bool QU;
     //!Output varialbe lower limit reached
-    boolean QD;
+    bool QD;
     //!Upper counter limit
     uint PV;
     //!Current counter value
@@ -632,9 +630,11 @@ public:
     //!Constructor
     CTUD(uint pv=0);
     //!Cyclic call for data processing
-    boolean process();
+    bool process();
     //!Cyclic call for data processing with input variables
-    boolean process(boolean cu, boolean cd, boolean reset, boolean load);
+    bool process(bool cu, bool cd, bool reset, bool load);
 };
 
+
+unsigned long plclib_millis();
 #endif
